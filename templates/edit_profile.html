@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center">Update Profile</h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <!-- Username -->
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" value="{{request.user.username}}" name="username"
+                required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{request.user.email}}" required>
+        </div>
+
+        <!-- User Type -->
+        <div class="mb-3">
+            <label for="user_type" class="form-label">User Type <span class="bg-primary p-2 text-white">You can't edit
+                    user
+                    type.</span></label>
+            <select class="form-select" id="user_type" name="user_type" required>
+
+                {% if user.user_type == 'viewer' %}
+                <option value="viewer">Viewer</option>
+                {% elif user.user_type == 'creator' %}
+                <option value="creator">Recipe Creator</option>
+
+                {% endif %}
+
+            </select>
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="mb-3">
+            <label for="profile_picture" class="form-label">Profile Picture</label>
+
+            <br>
+            <br>
+            {% if request.user.profile_pic %}
+            <img src="/{{user.profile_pic}}" alt="" width="50" height="50">
+            {% endif %}
+            <br>
+            <br>
+            <input type="file" class="form-control" id="profile_picture" name="profile_picture">
+
+        </div>
+
+
+        <!-- Update Button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary mb-4">Update Profile</button>
+        </div>
+
+
+
+    </form>
+</div>
+{% endblock body %}
